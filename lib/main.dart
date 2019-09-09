@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:formvalidation/src/bloc/provider.dart';
 import 'package:formvalidation/src/pages/home_page.dart';
 import 'package:formvalidation/src/pages/login_page.dart';
 
@@ -16,6 +17,6 @@ class MyApp extends StatelessWidget {
         'home': (BuildContext context) => HomePage(),
       },
     );
-    return materialApp;
+    return Provider(child: materialApp);
   }
 }
