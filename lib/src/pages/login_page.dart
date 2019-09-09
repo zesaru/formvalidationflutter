@@ -7,10 +7,94 @@ class LoginPage extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           _crearFondo(context),
+          _loginForm(context),
         ],
       ),
     );
   }
+}
+
+Widget _loginForm(BuildContext context) {
+  final size = MediaQuery.of(context).size;
+  return SingleChildScrollView(
+    child: Column(
+      children: <Widget>[
+        SafeArea(
+          child: Container(
+            height: 180.0,
+          ),
+        ),
+        Container(
+          width: size.width * 0.85,
+          margin: EdgeInsets.symmetric(vertical: 30.0),
+          padding: EdgeInsets.symmetric(vertical: 50.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(5.0),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 3.0,
+                  offset: Offset(0.0, 0.5),
+                  spreadRadius: 3.0)
+            ],
+          ),
+          child: Column(
+            children: <Widget>[
+              Text('Ingreso', style: TextStyle(fontSize: 20.0)),
+              SizedBox(height: 60.0),
+              _crearEmail(),
+              SizedBox(height: 30.0),
+              _crearPassword(),
+              SizedBox(height: 30.0),
+              _crearBoton(context),
+            ],
+          ),
+        ),
+        Text('Olvido la contraseña?'),
+        SizedBox(height: 100)
+      ],
+    ),
+  );
+}
+
+Widget _crearBoton(BuildContext context) {
+  return RaisedButton(
+    child: Container(
+      padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+      child: Text('Ingresar'),
+    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+    elevation: 0.0,
+    color: Colors.deepPurple,
+    textColor: Colors.white,
+    onPressed: () {},
+  );
+}
+
+Widget _crearEmail() {
+  return Container(
+    padding: EdgeInsets.symmetric(horizontal: 20),
+    child: TextField(
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+          icon: Icon(Icons.alternate_email, color: Colors.deepPurple),
+          hintText: 'ejemplo@orre.com',
+          labelText: 'Correo electronico'),
+    ),
+  );
+}
+
+Widget _crearPassword() {
+  return Container(
+    padding: EdgeInsets.symmetric(horizontal: 20),
+    child: TextField(
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+          icon: Icon(Icons.lock_outline, color: Colors.deepPurple),
+          labelText: 'Correo electronico'),
+    ),
+  );
 }
 
 Widget _crearFondo(BuildContext context) {
@@ -46,19 +130,10 @@ Widget _crearFondo(BuildContext context) {
         padding: EdgeInsets.only(top: 80.0),
         child: Column(
           children: <Widget>[
-            Icon(
-              Icons.person_pin_circle,
-              color: Colors.white,
-              size: 100.0,
-            ),
-            SizedBox(
-              height: 10.0,
-              width: double.infinity,
-            ),
-            Text(
-              'Cesar Murillo',
-              style: TextStyle(color: Colors.white, fontSize: 25.0),
-            )
+            Icon(Icons.person_pin_circle, color: Colors.white, size: 100.0),
+            SizedBox(height: 10.0, width: double.infinity),
+            Text('Cesar Murillo',
+                style: TextStyle(color: Colors.white, fontSize: 25.0))
           ],
         ),
       )
