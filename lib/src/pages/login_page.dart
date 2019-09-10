@@ -51,7 +51,7 @@ Widget _loginForm(BuildContext context) {
               SizedBox(height: 30.0),
               _crearPassword(bloc),
               SizedBox(height: 30.0),
-              _crearBoton(context),
+              _crearBoton(bloc),
             ],
           ),
         ),
@@ -62,17 +62,22 @@ Widget _loginForm(BuildContext context) {
   );
 }
 
-Widget _crearBoton(BuildContext context) {
-  return RaisedButton(
-    child: Container(
-      padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-      child: Text('Ingresar'),
-    ),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-    elevation: 0.0,
-    color: Colors.deepPurple,
-    textColor: Colors.white,
-    onPressed: () {},
+Widget _crearBoton(LoginBloc bloc) {
+  return StreamBuilder(
+    stream: bloc.formValidStream,
+    builder: (BuildContext context, AsyncSnapshot snapshot) {
+      return RaisedButton(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
+          child: Text('Ingresar'),
+        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+        elevation: 0.0,
+        color: Colors.deepPurple,
+        textColor: Colors.white,
+        onPressed: snapshot.hasData ? () {} : null,
+      );
+    },
   );
 }
 
@@ -108,7 +113,7 @@ Widget _crearPassword(LoginBloc bloc) {
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
             icon: Icon(Icons.lock_outline, color: Colors.deepPurple),
-            labelText: 'Correo electronico',
+            labelText: 'Contraseña',
             counterText: snapshot.data,
             errorText: snapshot.error,
           ),
