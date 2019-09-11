@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:formvalidation/src/utils/utils.dart' as util;
 
-class ProductoPage extends StatelessWidget {
+class ProductoPage extends StatefulWidget {
+  @override
+  _ProductoPageState createState() => _ProductoPageState();
+}
+
+class _ProductoPageState extends State<ProductoPage> {
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +29,7 @@ class ProductoPage extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(15.0),
           child: Form(
+            key: formKey,
             child: Column(
               children: <Widget>[
                 _crearNombre(),
@@ -80,7 +87,7 @@ class ProductoPage extends StatelessWidget {
   }
 
   void _submit() {
-    if (formKey.currentState.validate()) return;
+    if (!formKey.currentState.validate()) return;
 
     print('Tod ok');
   }
