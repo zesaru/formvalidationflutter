@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:formvalidation/src/models/producto_model.dart';
 import 'package:formvalidation/src/utils/utils.dart' as util;
 
 class ProductoPage extends StatefulWidget {
@@ -8,6 +9,7 @@ class ProductoPage extends StatefulWidget {
 
 class _ProductoPageState extends State<ProductoPage> {
   final formKey = GlobalKey<FormState>();
+  ProductoModel producto = new ProductoModel();
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class _ProductoPageState extends State<ProductoPage> {
               children: <Widget>[
                 _crearNombre(),
                 _crearPrecio(),
+                _crearDisponible(),
                 _crearBoton(),
               ],
             ),
@@ -49,6 +52,7 @@ class _ProductoPageState extends State<ProductoPage> {
       decoration: InputDecoration(
         labelText: 'Producto',
       ),
+      onSaved: (value) => producto.titulo = value,
       validator: (value) {
         if (value.length < 3) {
           return 'Ingrese el nombre del producto';
@@ -61,10 +65,12 @@ class _ProductoPageState extends State<ProductoPage> {
 
   Widget _crearPrecio() {
     return TextFormField(
+      initialValue: producto.valor.toString(),
       keyboardType: TextInputType.numberWithOptions(decimal: true),
       decoration: InputDecoration(
         labelText: 'Precio',
       ),
+      onSaved: (value) => producto.valor = double.parse(value),
       validator: (value) {
         if (util.isNumeric(value)) {
           return null;
@@ -72,6 +78,16 @@ class _ProductoPageState extends State<ProductoPage> {
           return 'Solo numeros';
         }
       },
+    );
+  }
+
+  Widget _crearDisponible() {
+    return SwitchListTile(
+      value: producto.disponible,
+      title: Text('Disponible'),
+      onChanged: (value) => setState(() {
+        producto.disponible = value;
+      }),
     );
   }
 
@@ -89,6 +105,11 @@ class _ProductoPageState extends State<ProductoPage> {
   void _submit() {
     if (!formKey.currentState.validate()) return;
 
+    formKey.currentState
+        .save(); //dispara los save de los textfield en el formulario
     print('Tod ok');
+    print(producto.titulo);
+    print(producto.valor);
+    print(producto.disponible);
   }
 }
