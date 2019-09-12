@@ -16,6 +16,11 @@ class _ProductoPageState extends State<ProductoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final ProductoModel prodData = ModalRoute.of(context).settings.arguments;
+
+    if (prodData != null) {
+      producto = prodData;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Producto'),
@@ -51,6 +56,7 @@ class _ProductoPageState extends State<ProductoPage> {
 
   Widget _crearNombre() {
     return TextFormField(
+      initialValue: producto.titulo.toString(),
       textCapitalization: TextCapitalization.sentences,
       decoration: InputDecoration(
         labelText: 'Producto',
@@ -108,12 +114,13 @@ class _ProductoPageState extends State<ProductoPage> {
   void _submit() {
     if (!formKey.currentState.validate()) return;
 
-    formKey.currentState
-        .save(); //dispara los save de los textfield en el formulario
-    print(producto.titulo);
-    print(producto.valor);
-    print(producto.disponible);
+    //dispara los save de los textfield en el formulario
+    formKey.currentState.save();
 
-    productoProvider.crearProducto(producto);
+    if (producto.id == null) {
+      productoProvider.crearProducto(producto);
+    } else {
+      productoProvider.editarProducto(producto);
+    }
   }
 }
